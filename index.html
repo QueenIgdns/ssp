@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>KeyNius – Web Security Tool</title>
-  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -12,60 +11,22 @@
 
 <hr>
 
-<!-- ================= PASSWORD ASSESSOR ================= -->
-<section>
-  <h2>1. Password Strength Assessor</h2>
-
-  <input type="password" id="assessPassword" placeholder="Enter password">
-  <button type="button" onclick="checkPasswordStrength()">Check Strength</button>
-
-  <p id="strengthResult"></p>
-</section>
+<h2>1. Password Strength Assessor</h2>
+<input type="password" id="assessPassword">
+<button onclick="checkPasswordStrength()">Check Strength</button>
+<p id="strengthResult"></p>
 
 <hr>
 
-<!-- ================= PASSWORD GENERATOR ================= -->
-<section>
-  <h2>2. Password Generator</h2>
-
-  <button type="button" onclick="generateSecurePassword()">Generate Password</button>
-  <p id="generatedPassword"></p>
-  <p id="generatedHash"></p>
-</section>
+<h2>2. Password Generator</h2>
+<button onclick="generatePassword()">Generate Password</button>
+<p id="genPassword"></p>
+<p id="genHash"></p>
 
 <hr>
 
-<!-- ================= WEB FORM VALIDATOR ================= -->
-<section>
-  <h2>3. Web Form Validator & Sanitizer</h2>
+<h2>3. Web Form Validator & Sanitizer</h2>
 
-  <form id="userForm" onsubmit="handleSubmit(event)">
-    <label>Full Name</label>
-    <input id="fullName">
-    <small id="errFullName"></small>
-
-    <label>Email</label>
-    <input id="email">
-    <small id="errEmail"></small>
-
-    <label>Username</label>
-    <input id="username">
-    <small id="errUsername"></small>
-
-    <label>Message</label>
-    <textarea id="message"></textarea>
-    <small id="errMessage"></small>
-
-    <button type="submit">Submit</button>
-  </form>
-
-  <h3>Sanitized Output</h3>
-  <pre id="output"></pre>
-</section>
-
-<script src="sqldetector.js"></script>
-<script src="sanitizer.js"></script>
-<script src="validator.js"></script>
-
-</body>
-</html>
+<form onsubmit="handleSubmit(event)">
+  <label>Full Name</label><br>
+  <input id="fullName"><
