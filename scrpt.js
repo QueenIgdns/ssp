@@ -1,10 +1,10 @@
-// ================= PASSWORD ASSESSOR =================
+// ================= PASSWORD STRENGTH ASSESSOR =================
 function checkPasswordStrength() {
   const pw = document.getElementById("assessPassword").value;
   const result = document.getElementById("strengthResult");
 
   if (!pw) {
-    result.innerText = "Enter a password.";
+    result.innerText = "Please enter a password.";
     return;
   }
 
@@ -15,10 +15,9 @@ function checkPasswordStrength() {
   if (/[0-9]/.test(pw)) score++;
   if (/[^A-Za-z0-9]/.test(pw)) score++;
 
-  result.innerText =
-    score <= 2 ? "Weak" :
-    score <= 4 ? "Moderate" :
-    "Strong";
+  if (score <= 2) result.innerText = "Weak password";
+  else if (score <= 4) result.innerText = "Moderate password";
+  else result.innerText = "Strong password";
 }
 
 // ================= PASSWORD GENERATOR =================
@@ -32,45 +31,61 @@ async function generatePassword() {
 
   document.getElementById("genPassword").innerText = "Password: " + pw;
   document.getElementById("genHash").innerText =
-    "SHA-256: " + await sha256(pw);
+    "SHA-256 Hash: " + await sha256(pw);
 }
 
-// ================= SHA-256 =================
+// ================= SHA-256 HASH =================
 async function sha256(text) {
   const data = new TextEncoder().encode(text);
-  const hash = await crypto.subtle.digest("SHA-256", data);
-  return Array.from(new Uint8Array(hash))
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hashBuffer))
     .map(b => b.toString(16).padStart(2, "0"))
     .join("");
 }
 
-// ================= WEB FORM =================
+// ================= WEB FORM VALIDATOR & SANITIZER =================
 function handleSubmit(e) {
   e.preventDefault();
 
   const data = {
-    fullName: fullName.value,
-    email: email.value,
-    username: username.value,
-    message: message.value
+    fullName: document.getElementById("fullName").value,
+    email: document.getElementById("email").value,
+    username: document.getElementById("username").value,
+    message: document.getElementById("message").value
   };
 
-  // Basic validation
-  if (!data.fullName || !data.email || !data.username || !data.message) {
-    alert("All fields required.");
+  // Validation
+  if (!data.fullName || data.fullName.length < 2) {
+    alert("Invalid Full Name");
+    return;
+  }
+
+  if (!data.email.includes("@") || data.email.includes(" ")) {
+    alert("Invalid Email");
+    return;
+  }
+
+  if (!data.username || /^\d/.test(data.username)) {
+    alert("Invalid Username");
+    return;
+  }
+
+  if (!data.message || data.message.length > 250) {
+    alert("Invalid Message");
     return;
   }
 
   // Sanitization
   const sanitized = {
-    fullName: data.fullName.replace(/[^A-Za-z\s]/g, ""),
+    fullName: data.fullName.replace(/[^A-Za-z\s\-']/g, ""),
     email: data.email.replace(/\s/g, ""),
     username: data.username.replace(/[^A-Za-z0-9_]/g, ""),
     message: data.message
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
-      .replace(/\b(SELECT|INSERT|DELETE|DROP|OR)\b/gi, "[REMOVED]")
+      .replace(/\b(SELECT|INSERT|DELETE|DROP|OR|UNION|UPDATE)\b/gi, "[REMOVED]")
   };
 
-  output.innerText = JSON.stringify(sanitized, null, 2);
+  document.getElementById("output").innerText =
+    JSON.stringify(sanitized, null, 2);
 }
