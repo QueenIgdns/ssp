@@ -7,3 +7,4 @@ function containsSqlKeywords(text) {
   const pattern = new RegExp("\\b(" + sqlKeywords.join("|") + ")\\b", "i");
   return pattern.test(text);
 }
+ 
