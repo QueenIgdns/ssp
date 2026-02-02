@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>KeyNius – Security Suite</title>
 
   <style>
@@ -10,6 +10,10 @@
       background: #0f172a;
       color: white;
       padding: 40px;
+    }
+
+    h1, h2 {
+      margin-bottom: 10px;
     }
 
     .box {
@@ -21,24 +25,30 @@
     }
 
     input {
-      padding: 10px;
-      margin: 10px 0;
+      padding: 12px;
       width: 100%;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: none;
+      font-size: 14px;
     }
 
     progress {
       width: 100%;
-      height: 12px;
+      height: 15px;
       margin: 10px 0;
     }
 
     ul {
       list-style: none;
       padding-left: 0;
+      margin-top: 10px;
     }
 
     li {
-      margin: 6px 0;
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: #9CA3AF;
     }
   </style>
 </head>
@@ -49,7 +59,7 @@
 
   <!-- PASSWORD ASSESSOR -->
   <div class="box">
-    <h2>🔐 Password Assessor</h2>
+    <h2>🔍 Password Assessor</h2>
 
     <input
       type="password"
@@ -71,11 +81,11 @@
     </ul>
   </div>
 
-  <!-- JAVASCRIPT -->
+  <!-- JAVASCRIPT (LOGIC SAME AS YOUR PYTHON) -->
   <script>
     function evaluatePassword() {
       const password = document.getElementById("passwordInput").value;
-      const strengthLabel = document.getElementById("strengthLabel");
+      const label = document.getElementById("strengthLabel");
       const bar = document.getElementById("strengthBar");
 
       const rules = {
@@ -90,6 +100,7 @@
 
       for (let rule in rules) {
         const item = document.getElementById(rule);
+
         if (rules[rule]) {
           item.textContent = "✔ " + item.textContent.slice(2);
           item.style.color = "#34D399";
@@ -100,9 +111,9 @@
         }
       }
 
-      if (password.length === 0) {
-        strengthLabel.textContent = "Please enter a password";
-        strengthLabel.style.color = "#9CA3AF";
+      if (!password) {
+        label.textContent = "Please enter a password";
+        label.style.color = "#9CA3AF";
         bar.value = 0;
         return;
       }
@@ -110,14 +121,14 @@
       bar.value = (score / 5) * 100;
 
       if (score <= 2) {
-        strengthLabel.textContent = "Weak Password";
-        strengthLabel.style.color = "#F87171";
+        label.textContent = "Weak Password";
+        label.style.color = "#F87171";
       } else if (score <= 4) {
-        strengthLabel.textContent = "Moderate Password";
-        strengthLabel.style.color = "#FBBF24";
+        label.textContent = "Moderate Password";
+        label.style.color = "#FBBF24";
       } else {
-        strengthLabel.textContent = "Strong Password";
-        strengthLabel.style.color = "#34D399";
+        label.textContent = "Strong Password";
+        label.style.color = "#34D399";
       }
     }
   </script>
