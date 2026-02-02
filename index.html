@@ -4,6 +4,56 @@
   <title>KeyNius – Security Suite</title>
   <style>
     body {
+
+      <script>
+function evaluatePassword() {
+  const password = document.getElementById("passwordInput").value;
+  const strengthLabel = document.getElementById("strengthLabel");
+  const bar = document.getElementById("strengthBar");
+
+  const rules = {
+    length: password.length >= 12,
+    upper: /[A-Z]/.test(password),
+    lower: /[a-z]/.test(password),
+    digit: /[0-9]/.test(password),
+    special: /[^A-Za-z0-9]/.test(password)
+  };
+
+  let score = 0;
+
+  for (let rule in rules) {
+    const item = document.getElementById(rule);
+    if (rules[rule]) {
+      item.textContent = "✔ " + item.textContent.slice(2);
+      item.style.color = "#34D399";
+      score++;
+    } else {
+      item.textContent = "✖ " + item.textContent.slice(2);
+      item.style.color = "#F87171";
+    }
+  }
+
+  if (password.length === 0) {
+    strengthLabel.textContent = "Please enter a password";
+    bar.value = 0;
+    return;
+  }
+
+  bar.value = (score / 5) * 100;
+
+  if (score <= 2) {
+    strengthLabel.textContent = "Weak Password";
+    strengthLabel.style.color = "#F87171";
+  } else if (score === 3 || score === 4) {
+    strengthLabel.textContent = "Moderate Password";
+    strengthLabel.style.color = "#FBBF24";
+  } else {
+    strengthLabel.textContent = "Strong Password";
+    strengthLabel.style.color = "#34D399";
+  }
+}
+</script>
+
       font-family: Arial;
       background: #0f172a;
       color: white;
