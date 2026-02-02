@@ -2,11 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Web Form Validator</title>
+  <title>KeyNius – Web Security Tool</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-
 <body>
 
 <h1>KeyNius – Web Security Tool</h1>
@@ -14,26 +12,30 @@
 
 <hr>
 
-<!-- PASSWORD ASSESSOR -->
+<!-- ================= PASSWORD ASSESSOR ================= -->
 <section>
   <h2>1. Password Strength Assessor</h2>
-  <input type="password" placeholder="Enter password">
-  <button>Check Strength</button>
-  <p><i>(Password strength result)</i></p>
+
+  <input type="password" id="assessPassword" placeholder="Enter password">
+  <button type="button" onclick="checkPasswordStrength()">Check Strength</button>
+
+  <p id="strengthResult"></p>
 </section>
 
 <hr>
 
-<!-- PASSWORD GENERATOR -->
+<!-- ================= PASSWORD GENERATOR ================= -->
 <section>
   <h2>2. Password Generator</h2>
-  <button>Generate Password</button>
-  <p><i>(Generated password + hash)</i></p>
+
+  <button type="button" onclick="generateSecurePassword()">Generate Password</button>
+  <p id="generatedPassword"></p>
+  <p id="generatedHash"></p>
 </section>
 
 <hr>
 
-<!-- WEB FORM VALIDATOR -->
+<!-- ================= WEB FORM VALIDATOR ================= -->
 <section>
   <h2>3. Web Form Validator & Sanitizer</h2>
 
@@ -44,6 +46,26 @@
 
     <label>Email</label>
     <input id="email">
+    <small id="errEmail"></small>
+
+    <label>Username</label>
+    <input id="username">
+    <small id="errUsername"></small>
+
+    <label>Message</label>
+    <textarea id="message"></textarea>
+    <small id="errMessage"></small>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <h3>Sanitized Output</h3>
+  <pre id="output"></pre>
+</section>
+
+<script src="sqldetector.js"></script>
+<script src="sanitizer.js"></script>
+<script src="validator.js"></script>
 
 </body>
 </html>
